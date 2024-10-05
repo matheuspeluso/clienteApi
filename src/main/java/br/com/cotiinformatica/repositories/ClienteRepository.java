@@ -89,4 +89,23 @@ public class ClienteRepository {
 	}
 	
 	
+	public boolean isExists(String cpf, UUID id) throws Exception {
+		var connection = ConnectionFactory.getConnection();
+		var statement = connection.prepareStatement("SELECT COUNT(cpf) AS qtd FROM cliente WHERE cpf =? AND id  <> ?");
+		statement.setString(1, cpf);
+		statement.setString(2 , id.toString());
+		
+		var resultSet = statement.executeQuery();
+		var result = false;
+		
+		if(resultSet.next()) {
+			var qtd = resultSet.getInt("qtd");
+			result = (qtd == 1);
+		}
+		
+		connection.close();
+		
+		return result;
+	}
+	
 }

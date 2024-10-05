@@ -30,9 +30,16 @@ public class ClienteController {
 		cliente.setEmail(request.getEmail());
 		
 		var clienteRepository = new ClienteRepository();
-		clienteRepository.create(cliente);
 		
-		return "Cliente cadastrado com sucesso!";
+		if(!clienteRepository.isExists(cliente.getCpf(), cliente.getId())) {
+			
+			clienteRepository.create(cliente);
+			return "Cliente cadastrado com sucesso!";
+		}
+		else {
+			return "O CPF " + cliente.getCpf() + " informado já está cadastrado para outro cliente. Tente novamente.";
+		}
+			
 	}
 
 	@PutMapping("{id}") //recebe o id que vai ser passado pelo url do serviço
@@ -47,8 +54,15 @@ public class ClienteController {
 			cliente.setTelefone(request.getTelefone());
 			cliente.setEmail(request.getEmail());
 			
-			clineteRepository.update(cliente);
-			return "cliente cadastardo com sucesso!";
+			if(!clineteRepository.isExists(cliente.getCpf(), cliente.getId())) {
+				clineteRepository.update(cliente);
+				return "cliente atualizado com sucesso!";
+			}
+			else {
+				return "Nao é possivel atualizar os dados pois o CPF " + cliente.getCpf() + "já pertecence a outro cliente!" ;
+			}
+			
+			
 		}else {
 			return "cliente não encontrado. Verifique o ID informado.";
 		}
@@ -73,6 +87,12 @@ public class ClienteController {
 		var clienteRepository = new ClienteRepository();
 
 		return clienteRepository.getAll();
+	}
+	
+	@GetMapping("{id}")
+	public Cliente getById(@PathVariable UUID id) throws Exception {
+		var clienteRepository = new ClienteRepository();
+		return clienteRepository.getById(id);
 	}
 
 }
