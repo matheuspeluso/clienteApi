@@ -1,0 +1,16 @@
+services:
+    mysql: #Criando um serviço de banco de dados MySQL]
+       image: mysql:latest #Baixando a imagem do banco de dados
+       environment: #Configurações de ambiente
+          MYSQL_USER: user_coti #Nome do usuário  
+          MYSQL_ROOT_PASSWORD: COTI #Senha do usuário administrador
+          MYSQL_PASSWORD: COTI #Senha do usuário local
+          MYSQL_DATABASE: bd_apiclientes
+       ports: #Portas para acesso ao serviço
+          - "3306:3306"
+networks: #Serviços de rede do container
+    default: #Rede padrão
+       driver: bridge #Tipo de rede compartilhada      
+
+
+
