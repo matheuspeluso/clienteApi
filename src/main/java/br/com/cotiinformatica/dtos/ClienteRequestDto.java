@@ -8,4 +8,5 @@ public class ClienteRequestDto {
 	private String cpf;
 	private String telefone;
 	private String email;
+	private String tipo;
 }

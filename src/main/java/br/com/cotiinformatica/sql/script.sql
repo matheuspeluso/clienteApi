@@ -10,3 +10,12 @@ CREATE TABLE cliente(
 );
 
 DESC cliente;
+
+ALTER TABLE cliente;
+ADD COLUMN tipo VARCHAR(25) NOT NULL DEFAULT 'Outros';
+
+
+SELECT 
+	tipo, COUNT(*) as quantidade
+FROM cliente
+	GROUP BY tipo
